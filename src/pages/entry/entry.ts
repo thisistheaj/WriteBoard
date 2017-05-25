@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { LogInPage } from '../log-in/log-in';
 import {HomePage} from "../home/home";
+
+import {UserServiceProvider} from '../../providers/user-service/user-service';
+
 /**
  * Generated class for the EntryPage page.
  *
@@ -16,7 +19,7 @@ import {HomePage} from "../home/home";
 })
 export class EntryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -24,7 +27,9 @@ export class EntryPage {
   }
 
   logInWithFaceBook(){
-    this.goToHome()
+    this.userService.logInUserWithFaceBook().then(data => {
+      this.goToHome();
+    }, err => alert(err.message));
   }
 
   goToLogIn(){

@@ -13,6 +13,11 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { WhiteBoardsServiceProvider } from '../providers/white-boards-service/white-boards-service';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -23,7 +28,17 @@ import { WhiteBoardsServiceProvider } from '../providers/white-boards-service/wh
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyDIX9h1XPh3A84v_OrT35R4vANTTLj-zQg",
+      authDomain: "followers-e0e8d.firebaseapp.com",
+      databaseURL: "https://followers-e0e8d.firebaseio.com",
+      projectId: "followers-e0e8d",
+      storageBucket: "followers-e0e8d.appspot.com",
+      messagingSenderId: "758989306245"
+    }),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

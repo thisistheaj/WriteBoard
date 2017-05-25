@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
-import {SignUpPage} from "../sign-up/sign-up";
+import { SignUpPage } from "../sign-up/sign-up";
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 /**
  * Generated class for the LogInPage page.
@@ -22,7 +23,7 @@ export class LogInPage {
     password:""
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -30,8 +31,10 @@ export class LogInPage {
   }
 
   logInWithEmail(){
-    alert("Logged in: " + this.user.email);
-    this.goToHome();
+    this.userService.logInUserWithEmail(this.user.email, this.user.password).then(data => {
+      alert("Logged in: " + this.user.email);
+      this.goToHome();
+    },err => alert(err.message));
   }
 
   goToSignUp(){
@@ -43,7 +46,10 @@ export class LogInPage {
   }
 
   sendForgotPasswordEmail(){
-    alert("Forgot password Email Sent to " + this.user.email)
+    alert("Forgot password Email Sent to " + this.user.email);
+    this.userService.sendForgotPasswordEmail(this.user.email).then(data => {
+
+    },err => alert(err.message));
   }
 
 }
