@@ -1,14 +1,24 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons front>
+      <button ion-button icon-only>
+        <ion-icon name="camera" (click)="takePicture()"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>
       Ionic Blank
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="image" (click)="takeImageFromGallery()"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <img src="http://placehold.it/350x350">
+  <button ion-button block>
+    Upload Image
+  </button>
 </ion-content>
