@@ -1,23 +1,24 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons front>
-      <button ion-button icon-only>
-        <ion-icon name="camera" (click)="takePicture()"></ion-icon>
+      <button ion-button icon-only (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>
       Ionic Blank
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="image" (click)="takeImageFromGallery()"></ion-icon>
+      <button ion-button icon-only (click)="takeImageFromGallery()">
+        <ion-icon name="image"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <img src="http://placehold.it/350x350">
+  <img *ngIf="!image" src="http://placehold.it/350x350">
+  <img *ngIf="image" [src]="'data:image/jpg;base64,' + image">
   <button ion-button block>
     Upload Image
   </button>

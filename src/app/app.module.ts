@@ -15,8 +15,9 @@ import { WhiteBoardsServiceProvider } from '../providers/white-boards-service/wh
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
     WhiteBoardsServiceProvider
