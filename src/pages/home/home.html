@@ -17,8 +17,8 @@
 </ion-header>
 
 <ion-content padding>
-  <img *ngIf="!image" src="http://placehold.it/350x350">
-  <img *ngIf="image" [src]="'data:image/jpg;base64,' + image">
+  <img *ngIf="!(user | async)?.image" src="http://placehold.it/350x350">
+  <img *ngIf="(user | async)?.image" [src]="'data:image/jpg;base64,' + (user | async)?.image">
   <button ion-button block>
     Upload Image
   </button>

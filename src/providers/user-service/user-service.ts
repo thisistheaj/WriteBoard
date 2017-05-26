@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase , FirebaseObjectObservable} from 'angularfire2/database';
 
+import { FirebaseApp } from 'angularfire2';
+
 import { Camera } from '@ionic-native/camera';
 
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -17,8 +19,9 @@ import * as firebase from 'firebase/app';
 export class UserServiceProvider {
 
   public user: FirebaseObjectObservable<any>;
+  public id: any;
 
-  constructor(public afAuth: AngularFireAuth, public afDb: AngularFireDatabase, public camera: Camera) {
+  constructor(public afAuth: AngularFireAuth, public afDb: AngularFireDatabase, public camera: Camera, public fbApp: FirebaseApp) {
     console.log('Hello UserServiceProvider Provider');
   }
 
@@ -27,6 +30,7 @@ export class UserServiceProvider {
       this.afAuth.auth.signInWithEmailAndPassword(email,password)
         .then(data => {
           this.user = this.afDb.object('/WriteBoard/v1/en/users/' + data.uid);
+          this.id = data.uid;
           resolve(data);
         }, err => reject(err));
     });
@@ -37,6 +41,7 @@ export class UserServiceProvider {
       this.afAuth.auth.createUserWithEmailAndPassword(email, password)
         .then(data => {
           this.user = this.afDb.object('/WriteBoard/v1/en/users/' + data.uid);
+          this.id = data.uid;
           this.user.update({email: email});
           resolve(data);
         },err => reject(err));
@@ -60,20 +65,27 @@ export class UserServiceProvider {
   public takePicture(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.camera.getPicture({
-        quality : 95,
+        quality : 25,
         destinationType : this.camera.DestinationType.DATA_URL,
         sourceType : this.camera.PictureSourceType.CAMERA,
         allowEdit : true,
         encodingType: this.camera.EncodingType.PNG,
-        targetWidth: 500,
-        targetHeight: 500,
-        saveToPhotoAlbum: true
+        targetWidth: 100,
+        targetHeight: 100,
+        saveToPhotoAlbum: false
       }).then(imageData => {
-        resolve(imageData)
+        this.user.update({image: imageData})
+          .then(data => console.log(data),err => alert('err'))
+          .catch(err => alert('catch'));
+        resolve(imageData);
       }, error => {
         reject({message:JSON.stringify(error)});
       });
     });
+  }
+
+  public getUser():FirebaseObjectObservable<any> {
+    return this.user;
   }
 
 }

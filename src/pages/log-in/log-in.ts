@@ -32,7 +32,6 @@ export class LogInPage {
 
   logInWithEmail(){
     this.userService.logInUserWithEmail(this.user.email, this.user.password).then(data => {
-      alert("Logged in: " + this.user.email);
       this.goToHome();
     },err => alert(err.message));
   }
